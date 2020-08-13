@@ -1,0 +1,14 @@
+*.mod.c
+*.ko
+*.o
+*.symvers
+*.order
+*.cmd
+
+lectura
+ioctl_test.c
+ioctl
+
+.cproject
+.project
+.tmp_versions
