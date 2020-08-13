@@ -69,7 +69,7 @@ static int accIMD_open(struct inode *inode, struct file *file) {
 
 	pr_info("open() fue invocada.\n");
 
-	escritos = writeRegister(CTRL_REG1, ACTIVE_MASK); //  CTRL_REG1, ACTIVE_MASK
+	escritos = writeRegister(CTRL_REG1, ACTIVE_MASK);
 	if (escritos < 0) {
 		pr_info("Error al abrir el driver\n");
 	} else {
@@ -85,7 +85,7 @@ static int accIMD_close(struct inode *inode, struct file *file) {
 
 	pr_info("close() fue invocada.\n");
 
-	escritos = writeRegister(CTRL_REG2, RST_MASK); // CTRL_REG2, RST_MASK
+	escritos = writeRegister(CTRL_REG2, RST_MASK);
 	if (escritos < 0) {
 		pr_info("Error al cerrar el driver\n");
 	} else {
@@ -126,8 +126,7 @@ static ssize_t accIMD_read(struct file *filep, char __user *buffer, size_t len, 
 	return 0;
 }
 
-/* declaracion de una estructura del tipo file_operations */
-
+/* Declaración de una estructura del tipo file_operations */
 static const struct file_operations my_dev_fops = {
 		.owner = THIS_MODULE,
 		.open = accIMD_open,
@@ -139,7 +138,7 @@ static const struct file_operations my_dev_fops = {
 
 /*--------------------------------------------------------------------------------*/
 
-/* Declaracion e inicializacion de una estructura miscdevice */
+/* Declaración e inicialización de una estructura miscdevice */
 static struct miscdevice accIMD_miscdevice = {
 		.minor = MISC_DYNAMIC_MINOR,
 		.name = DEVICE_NAME,
@@ -176,7 +175,7 @@ static int accIMD_probe(struct i2c_client *connected_slave, const struct i2c_dev
 	 * Una vez que tenemos numeros Major y Minor, exponemos al modulo completo
 	 * el puntero recibido como dispositivo esclavo conectado (cliente)
 	 */
-	slaveDevice = connected_slave; //guardamos este puntero para el uso de read y write
+	slaveDevice = connected_slave; // Guardamos este puntero para el uso de read y write
 
 	return 0;
 }
@@ -198,7 +197,7 @@ static struct i2c_driver accIMD_driver = {
 	.probe = accIMD_probe,
 	.remove = accIMD_remove,
 	.driver = {
-			.name = "EK_IMD_driver",
+			.name = "MMA8652_driver",
 			.owner = THIS_MODULE,
 			.of_match_table = of_match_ptr(accIMD_dt_ids),
 		},
@@ -218,5 +217,5 @@ module_i2c_driver( accIMD_driver);
  **********************************************************************/
 MODULE_AUTHOR("Jhonattan Camargo <u1802296@unimilitar.edu.co>");
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Este modulo es un driver para MMA8652");
-MODULE_INFO(mse_imd, "Esto no es para simples mortales");
+MODULE_DESCRIPTION("Este modulo es un driver para el acelerómetro MMA8652");
+MODULE_INFO(mse_imd, "Este driver fue realizado para la matería IMD de la MSE");
